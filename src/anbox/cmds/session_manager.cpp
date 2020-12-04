@@ -131,13 +131,7 @@ anbox::cmds::SessionManager::SessionManager()
       return EXIT_FAILURE;
     }
 
-    auto binder = "/dev/binder";
-    // If available, use own binder to not cause problem with existing binder
-    if (fs::exists("/dev/anbox-binder")) {
-      DEBUG("Using anbox-binder");
-      binder = "/dev/anbox-binder";
-    }
-    if (!fs::exists(binder) || !fs::exists("/dev/ashmem")) {
+    if (!fs::exists("/dev/binder") || !fs::exists("/dev/ashmem")) {
       ERROR("Failed to start as either binder or ashmem kernel drivers are not loaded");
       return EXIT_FAILURE;
     }
@@ -260,7 +254,7 @@ anbox::cmds::SessionManager::SessionManager()
       };
 
       container_configuration.devices = {
-        {binder, {0666, "dev/binder"}},
+        {"/dev/binder", {0666}},
         {"/dev/ashmem", {0666}},
         {"/dev/fuse", {0666}},
       };
