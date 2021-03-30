@@ -68,6 +68,7 @@ struct Configuration {
   bool single_window = false;
   bool no_touch_emulation = false;
   bool server_side_decoration = false;
+  bool rootless = false;
 };
 
 std::shared_ptr<BasePlatform> create(const std::string &name,
